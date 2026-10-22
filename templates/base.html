@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}Biblioteca del aula{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+    <header>
+        <h1><a href="{{ url_for('lista') }}">📚 Biblioteca del aula</a></h1>
+    </header>
+
+    <main>
+        {# Mensajes enviados desde Python con flash() #}
+        {% for mensaje in get_flashed_messages() %}
+            <p class="mensaje">{{ mensaje }}</p>
+        {% endfor %}
+
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <footer>
+        Servido por: {{ maquina }}
+    </footer>
+</body>
+</html>

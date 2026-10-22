@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ "Editar libro" if editando else "Nuevo libro" }}{% endblock %}
+
+{% block contenido %}
+<h2>{{ "Editar libro" if editando else "Nuevo libro" }}</h2>
+
+{# El mismo formulario sirve para crear y para editar #}
+<form method="post" class="formulario">
+    <label>Título
+        <input type="text" name="titulo" value="{{ libro.titulo or '' }}" required>
+    </label>
+    <label>Autor
+        <input type="text" name="autor" value="{{ libro.autor or '' }}" required>
+    </label>
+    <label>Año (opcional)
+        <input type="number" name="anio" value="{{ libro.anio or '' }}">
+    </label>
+    {% if editando %}
+    <label class="casilla">
+        <input type="checkbox" name="prestado" {% if libro.prestado or libro.prestado == 'on' %}checked{% endif %}>
+        Prestado
+    </label>
+    {% endif %}
+    <div>
+        <button type="submit">Guardar</button>
+        <a class="boton secundario" href="{{ url_for('lista') }}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

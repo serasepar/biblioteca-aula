@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<h2>Vaya, algo no ha ido bien</h2>
+<p>No hemos podido conectar con la base de datos. Inténtalo de nuevo en unos minutos.</p>
+<p><a class="boton" href="{{ url_for('lista') }}">Reintentar</a></p>
+{% endblock %}

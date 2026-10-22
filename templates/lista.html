@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="barra">
+    <form method="get" action="{{ url_for('lista') }}" class="buscador">
+        <input type="search" name="q" value="{{ q }}" placeholder="Buscar por título o autor">
+        <button type="submit">Buscar</button>
+    </form>
+    <a class="boton" href="{{ url_for('nuevo') }}">Añadir libro</a>
+</div>
+
+{% if libros %}
+<table>
+    <thead>
+        <tr><th>Título</th><th>Autor</th><th>Año</th><th>Estado</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+    {% for libro in libros %}
+        <tr>
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.anio or "—" }}</td>
+            <td>{{ "Prestado" if libro.prestado else "Disponible" }}</td>
+            <td class="acciones">
+                <a class="boton" href="{{ url_for('editar', id=libro.id) }}">Editar</a>
+                {# El borrado es un POST; onsubmit pide confirmación antes de enviarlo #}
+                <form method="post" action="{{ url_for('borrar', id=libro.id) }}"
+                      onsubmit="return confirm('¿Seguro que quieres borrar este libro?');">
+                    <button type="submit" class="peligro">Borrar</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>No hay libros{% if q %} que coincidan con «{{ q }}»{% endif %}.</p>
+{% endif %}
+{% endblock %}
